@@ -9,11 +9,11 @@ module.exports = defineConfig({
     // 主机名
     host: "localhost",
     proxy: {
-      [process.env.VUE_BASE_API]: {
-        target: process.env['VUE_BASE_URL'],
+      '/api': {
+        target: 'http://119.45.133.128:8089',
         changeOrigin: true,
         pathRewrite: {
-          ['^'+process.env.VUE_BASE_API]: ""
+          '^/api': ""
         }
       }
     }

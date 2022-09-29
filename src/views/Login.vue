@@ -11,10 +11,10 @@
                 </el-form-item>
                 <el-form-item class="verification" prop="code">
                     <el-input v-model="loginForm.code" placeholder="请输入验证码"></el-input>
-                    <img src="../assets/logo.png" alt="">
+                    <img :src="imgCodeUrl" alt="" @click="imgRefresh">
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onLoginSubmit('loginForm')">登录</el-button>
+                    <el-button type="primary" @click="onLoginSubmit('loginForm')">{{log}}</el-button>
                     <el-button class="el-button-default" @click="resetForm('loginForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -23,11 +23,14 @@
 </template>
 
 <script>
-import login from "../api/login"
+import { getLogin, getLoginImg } from "../api/login"
+import axios from "axios";
 export default {
     name: 'login',
     data() {
         return {
+            log: "登录",
+            imgCodeUrl: "",
             loginForm: {
                 username: "admin",
                 password: "1234",
@@ -48,7 +51,13 @@ export default {
         onLoginSubmit(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    // this.queryLogin()
+                    let str = `username=${this.loginForm.username}&password=${this.loginForm.password}&code=${this.loginForm.code}`
+                    this.$store.dispatch('queryLogin', str)
+                    this.$message({
+                        message: '登录成功',
+                        type: 'success'
+                    });
+                    this.$router.push('/')
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -59,29 +68,27 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        // 登录接口
-        async queryLogin() {
+        // 验证码接口
+        async queryImage() {
             try {
-                const response = await login.getLogin(this.loginForm)
-                console.log(response);
+                await getLoginImg().then(res => {
+                    console.log(res);
+                    this.imgCodeUrl = window.URL.createObjectURL(res.data)
+                })
             } catch (error) {
                 console.log(error.message);
             }
         },
-        // 验证码接口
-        // async queryImage() {
-        //     try {
-        //         const response = await login.getImage()
-        //         // let imgCodeUrl = window.URL.createObjectURL(response.data) // 后端返回前端渲染
-        //         console.log(response);
-        //     } catch (error) {
-        //         console.log(error.message);
-        //     }
-        // }
+        // 点击验证码切换
+        imgRefresh() {
+            this.queryImage()
+        }
+
     },
     computed: {},
     created() {
-        // this.queryImage()
+        this.queryImage()
+
     }
 }
 </script>
@@ -124,7 +131,6 @@ export default {
                 height: 36px;
                 vertical-align: middle;
                 margin-left: 20px;
-                border: 1px solid #ccc;
             }
         }
     }

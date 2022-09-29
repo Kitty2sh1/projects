@@ -7,8 +7,13 @@ const routes = [
   // 登录页面
   {
     path: "/login",
-    name: "name",
+    name: "login",
     component: () => import('../views/Login')
+  },
+  {
+    path: "/",
+    name: "index",
+    component: () => import('../layout')
   }
 ]
 

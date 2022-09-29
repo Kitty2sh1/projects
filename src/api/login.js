@@ -9,16 +9,15 @@ const getLogin = (data) => {
         data
     })
 }
-// 验证码
-const getImage=()=>{
+const getLoginImg=()=>{
     return request({
-        url:"/api/sysUser/image",
-        method:"POST",
+        url:'/api/sysUser/image',
+        method:"post",
         responseType: 'blob'
     })
 }
 
-export default {
+export {
     getLogin,     // 登录
-    getImage,     // 验证码
+    getLoginImg,     // 验证码
 }

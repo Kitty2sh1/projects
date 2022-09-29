@@ -2,10 +2,10 @@
 import axios from "axios"
 // 提示
 import { Loading } from "element-ui";
-
+import store from "../store"
 // 创建axios实例
 const instance = axios.create({
-    baseURL: process.env.VUE_BASE_API,  //基准地址
+    baseURL: 'http://119.45.133.128:8089',  //基准地址
     timeout: 3000  //超时时间
 });
 
@@ -20,6 +20,10 @@ instance.interceptors.request.use(function (config) {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
     })
+    // 请求头
+    // const token=window.localStorage.getItem('token')
+    const token=store.getters.token
+    if(token) config.headers.token=token
     return config;
 }, function (error) {
     // 对请求错误做些什么
@@ -37,4 +41,17 @@ instance.interceptors.response.use(function (response) {
     loading.close()
     return Promise.reject(error);
 });
-export default instance;
+
+const request = (option) => {
+    // 有请求就用   没请求默认get
+    option.method = option.method || 'get'
+    // 判断是get请求的情况下
+    // toLOWerCase()  小写
+    if (option.method.toLowerCase() === 'get') {
+        option.params = option.data || option.params
+        delete option.data
+    }
+    return instance(option)
+}
+
+export default request;
