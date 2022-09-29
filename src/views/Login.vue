@@ -49,14 +49,11 @@ export default {
     methods: {
         // 登录按钮
         onLoginSubmit(formName) {
-            this.$refs[formName].validate((valid) => {
+            this.$refs[formName].validate(async (valid) => {
                 if (valid) {
                     let str = `username=${this.loginForm.username}&password=${this.loginForm.password}&code=${this.loginForm.code}`
-                    this.$store.dispatch('queryLogin', str)
-                    this.$message({
-                        message: '登录成功',
-                        type: 'success'
-                    });
+                    const token = await this.$store.dispatch('queryLogin', str)
+                    if (!token) return
                     this.$router.push('/')
                 } else {
                     console.log('error submit!!');
