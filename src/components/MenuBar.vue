@@ -23,7 +23,7 @@ export default {
             return this.$route.path
         },
 
-        ...mapGetters(['isCollapse','menuList']),
+        ...mapGetters(['isCollapse', 'menuList']),
     },
 
     created() { }
@@ -32,8 +32,8 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
-    
-    .el-menu-vertical-demo:not(.el-menu--collapse){
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 200px;
     }
 }

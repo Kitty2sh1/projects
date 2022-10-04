@@ -8,8 +8,8 @@
 <script>
 export default {
     name: 'app-main',
-    components:{
-        "MenuIcon":()=>import('../../components/MenuIcon.vue')
+    components: {
+        "MenuIcon": () => import('../../components/MenuIcon.vue')
     },
     data() {
         return {};

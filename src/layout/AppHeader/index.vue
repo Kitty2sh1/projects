@@ -1,6 +1,6 @@
 <template>
     <div class="app-header">
-        <p>肥鱼权限管理系统</p>
+        <p class="title">肥鱼权限管理系统</p>
         <div class="user">
 
             <el-dropdown @command="handleCommand">
@@ -13,8 +13,10 @@
                     <el-dropdown-item command="logout">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
-            <p>欢迎您，肥鱼</p>
-            <p>{{data}}</p>
+            <div class="date">
+                <p>欢迎您，<b>肥鱼</b></p>
+                <p>{{data}} {{day}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -26,7 +28,7 @@ export default {
     data() {
         return {
             data: null,
-            day:null
+            day: null
         };
     },
     methods: {
@@ -53,17 +55,27 @@ export default {
             }
         },
         handleData() {
+            const week = [
+                "星期日",
+                "星期一",
+                "星期二",
+                "星期三",
+                "星期四",
+                "星期五",
+                "星期六",
+            ]
             this.data = dayjs().format('YYYY-MM-DD HH:mm:ss')
-            this.day=dayjs().day()
-            console.log(dayjs().day());
+            this.day = week[dayjs().day()]
+            // console.log(dayjs().day());
             setInterval(() => {
                 this.data = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                this.day = week[dayjs().day()]
             }, 1000);
         }
     },
     computed: {
     },
-    created() { 
+    created() {
         this.handleData()
     }
 }
@@ -77,11 +89,21 @@ export default {
     justify-content: space-between;
     box-sizing: border-box;
 
+    .title {
+        line-height: 60px;
+    }
+
     .user {
         display: flex;
 
         ::v-deep .el-avatar {
             margin: 10px;
+        }
+
+        .date {
+            padding: 10px 0;
+            box-sizing: border-box;
+            font-size: 15px;
         }
     }
 }

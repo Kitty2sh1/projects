@@ -44,7 +44,6 @@ export default {
     .el-header {
         background-color: #167bd8;
         color: #fff;
-        line-height: 60px;
     }
 
     .el-aside {
