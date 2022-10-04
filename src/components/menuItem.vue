@@ -15,7 +15,11 @@
                     </el-submenu>
                     <el-menu-item :index="item.path+ele.path" :key="ele.id"
                         v-if="!ele.children ||ele.children.length<=0">
-                        {{ele.label}}</el-menu-item>
+                        <template slot="title">
+                            <i :class="ele.icon"></i>
+                            <span slot="title">{{ele.label}}</span>
+                        </template>
+                    </el-menu-item>
                 </template>
             </el-submenu>
             <el-menu-item :index="item.path" :key="item.id" v-if="!item.children ||item.children.length<=0">
