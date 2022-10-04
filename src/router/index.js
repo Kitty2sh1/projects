@@ -28,8 +28,8 @@ const routes = [
         component: () => import('../views/system'),
         children: [
           {
-            path: "department",
-            name: "department",
+            path: "departmentList",
+            name: "departmentList",
             component: () => import('../views/system/children/department'),
             meta: {
               title: '机构管理'
@@ -73,6 +73,14 @@ const routes = [
             component: () => import('../views/goods/children/goodCategory'),
             meta: {
               title: '分类管理'
+            }
+          },
+          {
+            path: "goodsBrand",
+            name: "goodsBrand",
+            component: () => import('../views/goods/children/goodsBrand'),
+            meta: {
+              title: '品牌管理'
             }
           }
         ]

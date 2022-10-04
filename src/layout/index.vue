@@ -5,7 +5,7 @@
                 <app-header></app-header>
             </el-header>
             <el-container>
-                <el-aside width="200px">
+                <el-aside width="auto">
                     <app-aside></app-aside>
                 </el-aside>
                 <el-main>
@@ -56,6 +56,7 @@ export default {
     .el-main {
         color: #333;
         height: 100%;
+        padding: 0;
     }
 }
 </style>

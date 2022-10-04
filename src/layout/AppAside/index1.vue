@@ -1,0 +1,266 @@
+<template>
+    <div class="app-aside">
+        <!-- <el-menu :default-active="activedId" class="el-menu-vertical-demo" :collapse="isCollapse" router>
+            <el-submenu :index="item.path" v-for="item in menuList" :key="item.id">
+                <template slot="title">
+                    <i :class="item.icon"></i>
+                    <span slot="title">{{item.label}}</span>
+                </template>
+                <el-menu-item-group>
+                    <el-menu-item :index="item.path+ele.path" v-for="ele in item.children" :key="ele.id">
+                        <i :class="ele.icon"></i>
+                        {{ele.label}}
+                    </el-menu-item>
+                </el-menu-item-group>
+            </el-submenu>
+        </el-menu> -->
+        <el-menu :default-active="activedId" class="el-menu-vertical-demo" :collapse="isCollapse" router>
+            <template v-for="item in menuList">
+                <el-menu-item v-if="item.children.length<=0" :index="item.path" :key="item.id">
+                    <template slot="title">
+                        <i :class="item.icon"></i>
+                        <span slot="title">{{item.label}}</span>
+                    </template>
+                </el-menu-item>
+                <el-submenu v-if="item.children &&item.children.length>0" :index="item.path" :key="item.id">
+                    <template slot="title">
+                        <i :class="item.icon"></i>
+                        <span slot="title">{{item.label}}</span>
+                    </template>
+                    <template v-for="ele in item.children">
+                        <el-menu-item v-if="ele.children.length<=0" :index="item.path+ele.path" :key="ele.id">
+                            <i :class="ele.icon"></i>
+                            {{ele.label}}
+                        </el-menu-item>
+                        <el-submenu v-if="ele.children&&ele.children.length>0" :index="item.path+ele.path"
+                            :key="ele.id">
+                            <template slot="title">
+                                <i :class="ele.icon"></i>
+                                <span slot="title">{{ele.label}}</span>
+                            </template>
+                        </el-submenu>
+                    </template>
+                </el-submenu>
+            </template>
+        </el-menu>
+    </div>
+</template>
+
+<script>
+import { getPermissionList } from "../../api/login"
+export default {
+    name: 'app-aside',
+    data() {
+        return {
+            isCollapse: false,
+            // menuList: [],
+            menuList: [
+                {
+                    children: [
+                        {
+                            children: [],
+                            code: 'sys:dept',
+                            createTime: 1586703509000,
+                            icon: 'el-icon-copy-document',
+                            id: 33,
+                            isHome: 0,
+                            label: '机构管理',
+                            name: 'departmentList',
+                            orderNum: 2,
+                            parentId: 17,
+                            path: '/departmentList',
+                            remark: '机构管理',
+                            type: '1',
+                            updateTime: 1586337139000,
+                            url: '/system/Department/DepartmentList'
+                        },
+                        {
+                            children: [],
+                            code: 'sys:user',
+                            createTime: 1691464271000,
+                            icon: 'el-icon-s-custom',
+                            id: 18,
+                            isHome: 0,
+                            label: '用户管理',
+                            name: 'userList',
+                            orderNum: 3,
+                            parentId: 17,
+                            path: '/userList',
+                            type: '1',
+                            updateTime: 1691565988000,
+                            url: '/system/User/UserList'
+                        },
+                        {
+                            children: [],
+                            code: 'sys:role',
+                            createTime: 1691464271000,
+                            icon: 'el-icon-rank',
+                            id: 23,
+                            isHome: 0,
+                            label: '角色管理',
+                            name: 'roleList',
+                            orderNum: 4,
+                            parentId: 17,
+                            path: '/roleList',
+                            type: '1',
+                            updateTime: 1691565988000,
+                            url: '/system/Role/RoleList'
+                        },
+                        {
+                            children: [],
+                            code: 'sys:menu',
+                            createTime: 1691464271000,
+                            icon: 'el-icon-menu',
+                            id: 28,
+                            isHome: 0,
+                            label: '权限管理',
+                            name: 'menuList',
+                            orderNum: 5,
+                            parentId: 17,
+                            path: '/menuList',
+                            type: '1',
+                            updateTime: 1691565988000,
+                            url: '/system/Menu/MenuList'
+                        }
+                    ],
+                    code: 'sys:manage',
+                    createTime: 1691464271000,
+                    icon: 'el-icon-document',
+                    id: 17,
+                    isHome: 0,
+                    label: '系统管理',
+                    orderNum: 1,
+                    parentId: 0,
+                    path: '/system',
+                    type: '0',
+                    updateTime: 1691565988000
+                },
+                {
+                    children: [
+                        {
+                            children: [],
+                            code: 'sys:goodsCategory',
+                            createTime: 1586703272000,
+                            icon: 'el-icon-s-data',
+                            id: 36,
+                            isHome: 0,
+                            label: '分类管理',
+                            name: 'goodCategory',
+                            orderNum: 1,
+                            parentId: 34,
+                            path: '/goodCategory',
+                            type: '1',
+                            updateTime: 1586683590000,
+                            url: '/goods/goodsCategory/goodsCategoryList'
+                        },
+                        {
+                            children: [],
+                            code: 'sys:goodsBrand',
+                            createTime: 1586683924000,
+                            icon: 'el-icon-tickets',
+                            id: 37,
+                            isHome: 0,
+                            label: '品牌管理',
+                            name: 'goodsBrand',
+                            orderNum: 2,
+                            parentId: 34,
+                            path: '/goodsBrand',
+                            type: '1',
+                            updateTime: 1586683924000,
+                            url: '/goods/goodsBrand/goodsBrandList'
+                        }
+                    ],
+                    code: 'sys:goods',
+                    createTime: 1586702987000,
+                    icon: 'el-icon-picture',
+                    id: 34,
+                    isHome: 0,
+                    label: '商品管理',
+                    name: '',
+                    orderNum: 2,
+                    parentId: 0,
+                    path: '/goods',
+                    type: '0',
+                    updateTime: 1586683323000
+                },
+                {
+                    children: [
+                        {
+                            children: [],
+                            code: 'sys:systemCode',
+                            createTime: 1587012282000,
+                            icon: 'el-icon-files',
+                            id: 43,
+                            isHome: 0,
+                            label: '代码生成',
+                            name: 'systemCode',
+                            orderNum: 0,
+                            parentId: 42,
+                            path: '/systemCode',
+                            type: '1',
+                            updateTime: 1586684646000,
+                            url: '/system/config/code'
+                        },
+                        {
+                            children: [],
+                            code: 'sys:document',
+                            createTime: 1586748705000,
+                            icon: 'el-icon-s-operation',
+                            id: 77,
+                            isHome: 0,
+                            label: '接口文档',
+                            name: 'document',
+                            orderNum: 0,
+                            parentId: 42,
+                            path: '/document',
+                            type: '1',
+                            updateTime: 1586748705000,
+                            url: '/system/config/systemDocument'
+                        }
+                    ],
+                    code: 'sys:systenConfig',
+                    createTime: 1586703003000,
+                    icon: 'el-icon-receiving',
+                    id: 42,
+                    isHome: 0,
+                    label: '系统工具',
+                    name: '',
+                    orderNum: 3,
+                    parentId: 0,
+                    path: '/systenConfig',
+                    type: '0',
+                    updateTime: 1586684441000
+                }
+            ],
+        };
+    },
+    methods: {
+        // 获取菜单列表
+        // async queryPermissionList() {
+        //     try {
+        //         const res = await getPermissionList()
+        //         console.log(res);
+        //         this.menuList = res.data.data.menuList
+        //     } catch (error) {
+
+        //     }
+        // }
+    },
+    computed: {
+        
+    },
+    created() {
+        // 获取菜单列表
+        // this.queryPermissionList()
+        console.log(this.menuList);
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.app-aside {
+    ::v-deep .el-menu {
+        border: 0;
+    }
+}
+</style>
