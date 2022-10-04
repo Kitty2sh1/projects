@@ -1,10 +1,16 @@
 <template>
     <div class="index">
         <el-container>
-            <el-header>Header</el-header>
+            <el-header>
+                <app-header></app-header>
+            </el-header>
             <el-container>
-                <el-aside width="200px">Aside</el-aside>
-                <el-main>Main</el-main>
+                <el-aside width="200px">
+                    <app-aside></app-aside>
+                </el-aside>
+                <el-main>
+                    <app-main></app-main>
+                </el-main>
             </el-container>
         </el-container>
     </div>
@@ -12,6 +18,11 @@
 
 <script>
 export default {
+    components: {
+        "app-header": () => import('./AppHeader'),
+        "app-aside": () => import('./AppAside'),
+        "app-main": () => import('./AppMain')
+    },
     name: 'index',
     data() {
         return {};
@@ -39,6 +50,7 @@ export default {
     .el-aside {
         color: #333;
         height: 100%;
+        border: 1px #ccc solid;
     }
 
     .el-main {

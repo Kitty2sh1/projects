@@ -38,10 +38,13 @@ export default {
             },
             rules: {
                 username: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                    { required: true, message: '请输入用户名', trigger: 'change' }
                 ],
                 password: [
-                    { required: true, message: '请输入密码', trigger: 'blur' }
+                    { required: true, message: '请输入密码', trigger: 'change' }
+                ],
+                code: [
+                    { required: true, message: '请输入验证码', trigger: 'change' }
                 ],
             }
         };
@@ -51,10 +54,18 @@ export default {
         onLoginSubmit(formName) {
             this.$refs[formName].validate(async (valid) => {
                 if (valid) {
-                    let str = `username=${this.loginForm.username}&password=${this.loginForm.password}&code=${this.loginForm.code}`
-                    const token = await this.$store.dispatch('queryLogin', str)
-                    if (!token) return
-                    this.$router.push('/')
+                    try {
+                        let str = `username=${this.loginForm.username}&password=${this.loginForm.password}&code=${this.loginForm.code}`
+                        const token = await this.$store.dispatch('queryLogin', str)
+                        if (!token) return
+                        this.$router.push('/')
+                        this.$message({
+                            message: '登录成功',
+                            type: 'success'
+                        });
+                    } catch (error) {
+                        console.log(error.message);
+                    }
                 } else {
                     console.log('error submit!!');
                     return false;

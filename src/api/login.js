@@ -9,6 +9,7 @@ const getLogin = (data) => {
         data
     })
 }
+// 验证码
 const getLoginImg=()=>{
     return request({
         url:'/api/sysUser/image',
@@ -16,8 +17,24 @@ const getLoginImg=()=>{
         responseType: 'blob'
     })
 }
+// 退出登录
+const getLogout=()=>{
+    return request({
+        url:'/api/sysUser/loginOut',
+        method:'POST'
+    })
+}
 
+// 获取菜单列表
+const getPermissionList=()=>{
+    return request({
+        url:'/api/sysUser/getPermissionList',
+        method:'GET'
+    })
+}
 export {
     getLogin,     // 登录
-    getLoginImg,     // 验证码
+    getLoginImg,  // 验证码
+    getLogout,    // 退出登录
+    getPermissionList,  //获取菜单列表
 }

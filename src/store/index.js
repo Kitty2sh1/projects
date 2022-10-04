@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import { getLogin } from '@/api/login'
-import { setToken, getToken } from '@/utils/storage'
-import { Message } from 'element-ui'
+import { getLogin,getLogout } from '@/api/login'
+import { setToken, getToken,removeToken } from '@/utils/storage'
+// import { Message } from 'element-ui'
 export default new Vuex.Store({
   state: {
     token: getToken() || "",
@@ -18,6 +18,9 @@ export default new Vuex.Store({
     SET_TOKEN(state, obj) {
       state.token = obj.token
       setToken(obj.token)
+    },
+    REMOVE_TOKEN(state){
+      removeToken()
     }
   },
   actions: {
@@ -27,15 +30,22 @@ export default new Vuex.Store({
         const response = await getLogin(str)
         console.log(response);
         commit('SET_TOKEN', response.data)
-        Message({
-          message: '登录成功',
-          type: 'success'
-        });
         return response.data.token
       } catch (error) {
         console.log(error.message);
       }
     },
+    // 退出登录
+    async queryLogout({commit}){
+      try {
+        const response=await getLogout()
+        console.log(response);
+        commit('REMOVE_TOKEN')
+        return response
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   },
   modules: {
   }

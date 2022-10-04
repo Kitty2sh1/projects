@@ -5,7 +5,7 @@ import { Loading } from "element-ui";
 import store from "../store"
 // 创建axios实例
 const instance = axios.create({
-    baseURL: 'http://119.45.133.128:8089',  //基准地址
+    baseURL: 'http://119.45.133.128:8098',  //基准地址
     timeout: 3000  //超时时间
 });
 
