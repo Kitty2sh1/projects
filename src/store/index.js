@@ -7,20 +7,21 @@ import { setToken, getToken, removeToken } from '@/utils/storage'
 
 import Menu from "./modules/menu"
 import getters from "./getters"
+import tags from "./modules/tags"
 
 
 export default new Vuex.Store({
-  
+
   state: {
     token: getToken() || "",
     user: ""
   },
   getters: {
+    ...getters,
     token(state) {
       return state.token
     }
   },
-  getters,
   mutations: {
     SET_TOKEN(state, obj) {
       state.token = obj.token
@@ -55,6 +56,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    Menu
+    Menu,
+    tags
   }
 })

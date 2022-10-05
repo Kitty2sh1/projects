@@ -13,13 +13,16 @@ const routes = [
   {
     path: "/",
     name: "index",
-    redirect:'/home',
+    redirect: '/home',
     component: () => import('../layout'),
     children: [
       {
-        path:'/home',
-        name:'home',
-        component:()=>import('../layout/home')
+        path: '/home',
+        name: 'home',
+        component: () => import('../layout/home'),
+        // meta: {
+        //   title: '首页'
+        // },
       },
       // 系统管理
       {

@@ -1,6 +1,9 @@
 <template>
     <div class="app-main">
-        <menu-icon></menu-icon>
+        <div class="flex">
+            <menu-icon></menu-icon>
+            <tags></tags>
+        </div>
         <router-view></router-view>
     </div>
 </template>
@@ -9,7 +12,8 @@
 export default {
     name: 'app-main',
     components: {
-        "MenuIcon": () => import('../../components/MenuIcon.vue')
+        "MenuIcon": () => import('../../components/MenuIcon.vue'),
+        "tags": () => import('../../components/tags.vue')
     },
     data() {
         return {};
@@ -21,5 +25,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-main {}
+.app-main {
+    .flex{
+        display: flex;
+        height: 40px;
+    }
+}
 </style>
